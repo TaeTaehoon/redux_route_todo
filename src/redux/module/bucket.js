@@ -2,6 +2,7 @@
 
 // Actions
 const CREATE = "bucket/CREATE";
+const DELETE = "bucket/DELETE";
 
 const initialState = {
   list: [
@@ -14,17 +15,26 @@ const initialState = {
 
 // Action Creators
 export function createBucket(bucket) {
-  console.log("액션 생성~");
   return { type: CREATE, bucket };
+}
+
+export function deleteBucket(bucket) {
+  return { type: DELETE, bucket };
 }
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case "bucket/CREATE": {
-      console.log(state.list);
       const newBucketList = [...state.list, action.bucket];
 
+      return { list: newBucketList };
+    }
+
+    case "bucket/DELETE": {
+      const newBucketList = [...state.list].filter(
+        (bucket, idx) => idx !== parseInt(action.bucket)
+      );
       return { list: newBucketList };
     }
     // do reducer stuff
